@@ -1,0 +1,51 @@
+command /hc [<text>] [<text>]:
+	trigger:
+		if arg 1 is " " or " ":
+			send "                   &6[&4Hybrid&bHardcore&6]                   "
+			send "&b/hc info &6 Informacje o autorze"
+			send "&b/hc stop &6 Zatrzymuje Dzialanie Pluginu &4(only Admin)"
+			send "&b/hc start &6 Rozpoczyna Dzialanie Skryptu &4(only Admin)"
+			send "&b/hc czas &6 Pokazuje aktualny czas trwania uwiezienia po smierci"
+			send "&b/hc restart &6Restartuje dzialanie skryptu &4 (only Admin)"
+		if arg 1 is "pomoc" or "help":
+			send "                   &6[&4Hybrid&bHardcore&6]                   "
+			send "&b/hc info &6 Informacje o autorze"
+			send "&b/hc stop &6 Zatrzymuje Dzialanie Pluginu &4(Only Admin)"
+			send "&b/hc start &6 Rozpoczyna Dzialanie Skryptu &4(only Admin)"
+			send "&b/hc czas &6 Pokazuje aktualny czas trwania uwiezienia po smierci"
+			send "&b/hc restart &6Restartuje dzialanie skryptu &4 (only Admin)"
+		if arg 1 is "info" or "?":
+			send "                   &6[&4Hybrid&bHardcore&6]                   "
+			send "&6Plugin stworzony przez &cJodi!"
+			send "&6Zakaz udostepniania skryptu bez wiedzy autora!"
+		if arg 1 is "stop" or "koniec":
+			if player has permission "hybrid.admin":
+				make console execute command "/skript disable HybridHC"
+				broadcast "&6[&4Hybrid&bHardcore&6]&7Tryb Hardcore Zostal Wylaczony!"
+				send "&6[&4Hybrid&bHardcore&6]&3Pomyslnie Wylaczyles Tryb Hardcore!"
+		if arg 1 is "start" or "rozpocznij":
+			if player has permission "hybrid.admin":
+				make console execute command "/skript enable HybridHC"
+				broadcast "&6[&4Hybrid&bHardcore&6]&7Tryb Hardcore Zostal Wlaczony!"
+				send "&6[&4Hybrid&bHardcore&6]&3Pomyslnie Wlaczyles Tryb Hardcore!"
+		if arg 1 is "restart" or "reload":
+			if player has permission "hybrid.admin":
+				make console execute command "/skript reload HybridHC"
+				send "&6[&4Hybrid&bHardcore&6]&3Pomyslnie przeladowales tryb Hardcore!"
+		if arg 1 is "czas" or "time":
+			send "&6[&4Hybrid&bHardcore&6]&3Aktualny czas trwania bana po smierci to &e24H!"
+		if arg 1 is empty:
+			send "&6Wpisz &b/hc pomoc &6 Aby uzyskac liste komend!"
+on respawn:
+	apply slowness 9 to player for 24 hours
+	send "&4Umarles! &6Zostaniesz uwieziony za 5 sekund na 24H!"
+	wait 5 real seconds
+	make console execute command "/warp jail %name of player%"
+	make console execute command "/pex user %name of player% add essentials.*"
+	make player execute command "/setjail %name of player%"
+	make console execute command "/pex user %name of player% remove essentials.*"
+	make console execute command "/jail %name of player% %name of player% 24H"
+	apply blindness 10 to player for 24 hours
+	apply slowness 9 to player for 24 hours
+
+	
