@@ -83,4 +83,7 @@ command /warn [<text>] [<text>] [<text>]:
           wait 1 real second
           send "&4Skrypt Restartuje sie!"
           make console execute command "/skript reload HybridWarn"
+      if arg 1 is "info" "autor":
+          send "              {@logo}                 "
+
           
