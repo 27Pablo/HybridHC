@@ -1,0 +1,160 @@
+
+#======================================#
+# HybridHardcore Skrypt Wykonany przez:#
+# Jodi dla Skript.pl oraz MPCForum.pl  #
+# Udostepnianie Skryptu tylko za zgoda #
+# Autora.Kontakt GG: 22587153          #
+# Wszelkie pytania/zgloszenia na email #
+# pablo@zagrani.pl lub w temacie       #
+#======================================#
+
+options:
+
+#======================================#
+#                CONFIG                #
+#======================================#
+	
+	# Forma kary po smierci (ban jail)
+	forma: ban
+
+	# Czas Trwania bana |Ban time:
+	czas: 24
+
+	# Strona na ktorej gracz moze sie odbanowac|Website for unban:
+	website: www.hybridcraft.pl
+
+	# Logo Type:
+	logo: &6[&4Hybrid&bHardcore&6]
+
+	# Format (H=Godzinny D=Dniowy M=Minutowy)|Time Format (H=Hours D=Days M=Minutes):
+	format: H
+	
+	# Jezyk/language:
+	lang: pl
+
+#----------------------------------------------#
+#                 Code                         #
+#----------------------------------------------#
+command /hc [<text>] [<text>]:
+	trigger:
+		if arg 1 is " " or " ":
+			send "                   {@logo}                  "
+			send "&b/hc info &6 Informacje o autorze"
+			send "&b/hc czas &6 Pokazuje aktualny czas trwania uwiezienia po smierci"
+		if arg 1 is "pomoc" or "help":
+			send "                   {@logo}                  "
+			send "&b/hc info &6 Informacje o autorze""
+			send "&b/hc czas &6 Pokazuje aktualny czas trwania uwiezienia po smierci"
+			send "&b/hc zarzadzaj &6 Pokazuje komendy admina!"
+		if arg 1 is "info" or "?":
+			send "                   {@logo}                   "
+			send "&6Plugin stworzony przez &cJodi!"
+			send "&6Zakaz udostepniania skryptu bez wiedzy autora!"
+		if arg 1 is "stop" or "koniec":
+			if player has permission "hybrid.admin":
+				make console execute command "/skript disable HybridHC"
+				broadcast "&6[&4Hybrid&bHardcore&6]&7Tryb Hardcore Zostal Wylaczony!"
+				send "&6[&4Hybrid&bHardcore&6]&3Pomyslnie Wylaczyles Tryb Hardcore!"
+		if arg 1 is "start" or "rozpocznij":
+			if player has permission "hybrid.admin":
+				make console execute command "/skript enable HybridHC"
+				broadcast "&6[&4Hybrid&bHardcore&6]&7Tryb Hardcore Zostal Wlaczony!"
+				send "&6[&4Hybrid&bHardcore&6]&3Pomyslnie Wlaczyles Tryb Hardcore!"
+		if arg 1 is "restart" or "reload":
+			if player has permission "hybrid.admin":
+				make console execute command "/skript reload HybridHC"
+				send "&6[&4Hybrid&bHardcore&6]&3Pomyslnie przeladowales tryb Hardcore!"
+		if arg 1 is "czas" or "time":
+			send "&6[&4Hybrid&bHardcore&6]&3Aktualny czas trwania bana po smierci to &e24H!"
+		if arg 1 is empty:
+			send "&6Wpisz &b/hc pomoc &6 Aby uzyskac liste komend!"
+		if arg 1 is "zarzadzaj" or "admin":
+			if player has permission "hybrid.admin":
+				send "                   {@logo}                   "
+				send "&b/hc ustaw &6 Tworzy Wiezienie W Aktualnej Pozycji Admina!"
+				send "&b/hc restart &6Restertuje Dzialanie Skryptu!"
+				send "&b/hc stop &6Zatrzymuje Dzialanie Skryptu!"
+				send "&b/hc odbanuj &6Odbanowywuje gracza!"
+				send "&b/hc usun &6 Usuwa wiezienie !"
+		if arg 1 is "ustaw":
+			if player has permission "hybrid.admin":
+				send "&6Ustawianie Wiezienia Trwa!"
+				make player execute command "//walls 20"
+				make player execute command "/setwarp jail"
+				send "&6Wiezienie Ustawione!"
+		if arg 1 is "usun" or "unban":
+			if player has permission "hybrid.admin":
+				if arg 2 is set:
+					send "&cBlad! &4Podaj &6Nick &4 Gracza!"
+					stop
+				make console execute command "/unjail %arg 2% %arg 2%"
+				send "&6Pomyslnie Ozywiles &4%arg 2%"
+		if arg 1 is not set:
+			if {language} is "eng":
+				send "                   {@logo}                   "
+				send "&b/hc info &6Information about the author!"
+				send "&b/hc time &6Information about ban after death!"
+				send "&b/hc admin &6Information for Admins!"
+		if arg 1 is "admin":
+			if {language} is "eng":
+				send "                   {@logo}                   "
+				send "&b/hc set &6Make Jail For Banned Players! (with WorldEdit wand!!!!)"
+				send "&b/hc restart &6Reload Skript!"
+				send "&b/hc stop &6Stop Skript!"
+				send "&b/hc unban &6Respawn Player!"
+				send "&b/hc delete &6Delete Jail For Banned Players!"
+		if arg 1 is "set":
+			if player has permission "hybrid.admin":	
+				if {language} is "eng":
+					send "                   {@logo}                   "
+					send ".............LOADING.................."
+					make player execute command "//walls 20"
+					make player execute command "/setwarp jail"
+					send "&6Jail Has Been set!"		
+on respawn:
+	if {forma} is "ban":
+		send "&4Umarles! &6Zostaniesz zbanowany za 5 sekund na &e%{@czas}%%{@format}%!"
+		send "&aMozesz odbanowac sie na %{@website}%!"
+		wait 5 real seconds
+		make console execute command "/ban %name of player% %{@czas}%"
+		broadcast "%name of player% &eZmarl! &cTeraz musi czekac %{@czas}%%{@format}%!"	
+on respawn:
+	if {forma} is "jail":
+		apply slowness 9 to player for 24 hours
+		send "&4Umarles! &6Zostaniesz uwieziony za 5 sekund na %{@czas}%%{@format}%!"
+		wait 5 real seconds
+		make console execute command "/warp jail %name of player%"
+		make console execute command "/pex user %name of player% add essentials.*"
+		make player execute command "/setjail %name of player%"
+		make console execute command "/pex user %name of player% remove essentials.*"
+		make console execute command "/jail %name of player% %name of player% %{@czas}%%{@format}%"
+		apply blindness 10 to player for 24 hours
+		apply slowness 9 to player for 24 hours
+on skript start:
+	send "" to console
+	send "&e|============================|" to console
+	send "&e|&4        HybridHC        &e|" to console
+	send "&e|&6        Wlaczony        &e|" to console
+	send "&e|&c                By Jodi &e|" to console
+	send "&e|============================|" to console
+on script load:
+	set {lang} to {@lang}
+	set {forma} to {@forma}
+command /zmien:
+	trigger:
+		if player has permission "hybrid.admin":
+			if {forma} is "ban":
+				set {forma} to "jail"
+			if {forma} is "jail":
+				set {forma} to "ban"
+command /czas [<text>]:
+	trigger:
+		if player has permission "hybrid.admin":
+			if {forma} is "ban":
+				set {czas} to "%arg 1%"
+				send "{@logo}&3Pomyslnie zmieniles czas trwania bana!"
+			if {forma} is "jail":
+				set {czas} to "%arg 1%"
+				send "{@logo}&3Pomyslnie zmieniles czas trwania jailu!"
+			if arg 1 is empty:
+				send "{@logo}&cBLAD! &3Podaj Czas Trwania!"
