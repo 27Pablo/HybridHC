@@ -1,0 +1,86 @@
+#=====================#
+# Skrypt Zrobiony dla #
+# Nexes.pl            #
+# Wykonal: Jodi       #
+#=====================#
+
+options:
+
+# Config Skryptu:
+
+# Ilosc warna po ktorym gracz zostaje zawieszony:
+
+  warn.points: 10
+  
+# Forma kary po przekroczeniu ustalonego poziomu warna (jail lub ban):
+  
+  warn.form: jail
+
+# Czas Bana/Jailu po przekroczeniu ustalonego poziomu warna:
+  
+  warn.time: 12
+  
+# Format czasu kary po przekroczeniu ustalonego poziomu warna (H=Godziny M=Minuty D=Dni) TYLKO W PRZYPADKU JAIL!:
+
+  warn.jail.form: H
+  
+# Format czasu kary po przekroczeniu ustalonego poziomu warna (H=Godziny M=Minuty D=Dni) TYLKO W PRZYPADKU BANA!:
+ 
+  warn.ban.form: H
+  
+#######################
+#         CODE        #
+#######################
+command /warn [<text>] [<text>] [<text>]:
+  trigger:
+      if arg 1 is "sprawdz" or "check":
+        send "            {@logo}                 "
+        send "&eTwój poziom warna: %{warn.%player%}"
+        send "&c Maksymalny poziom warna to {@warn.points}"
+      if arg 1 is "dodaj" or "add":
+        if player has permission "hybrid.admin":
+          add 1 to {warn.%arg 2%}
+          send "&c Zostales ostrzezony przez &4%name of player%" to %arg 2%
+          send "&e Kolejne wykroczenia moga zakonczyc sie banem lub jailem!"
+          send "&6Odwolac mozesz sie na: &b&l {@website}"
+      if arg 1 is "cofnij" or "delete":
+        if player has permission "hybrid.admin":
+          remove 1 to {warn.%arg 2%}
+          send "            {@logo}                 "
+          send "&eTwoj punkt warna zostal odjety przez &4%name of player%" to %arg 2%
+          send "&cCzas Podziekowac Adminowi!" to %arg 2"
+      if arg 1 is "help" or "pomoc":
+        send "            {@logo}                 "
+        send "&b/warn sprawdz &6Sprawdza twoj poziom warna!"
+        send "&b/warn kara &6Wyswietla czas i forme kary !"
+        send "&b/warn zaplac &6Zaplac za odjecie warna!"
+      if arg 1 is "admin" or "zarzadzaj":
+        if player has permission "hybrid.admin":
+          send "            {@logo}                 "
+          send "&b/warn dodaj <nick>  &6Dodaje punkt warna dla gracza!"
+          send "&b/warn cofnij <nick>  &6Cofa Warna Gracza!"
+          send "&b/warn stop &6Zatrzymuje dzialanie skryptu! &c(Only HeadAdmin)"
+          send "&b/warn reload &6Restartuje skrypt &c(Only HeadAdmin!)"
+      if arg 1 is "stop":
+        if player has permission "hybrid.head":
+          send "            {@logo}                 "
+          send "&eSkrypt zatrzymuje sie!"
+          make console execute command "/skript disable HybridWarn"
+      if arg 1 is "reload" or "restart":
+        if player has permission "hybrid.head":
+          send "            {@logo}                 "
+          send "&eSkrypt zrestartuje sie za &c5 Sekund!"
+          wait 1 real second
+          send "&65...."
+          wait 1 real second
+          send "&64...."
+          wait 1 real second
+          send "&63...."
+          wait 1 real second
+          send "&62...."
+          wait 1 real second
+          send "&61...."
+          wait 1 real second
+          send "&4Skrypt Restartuje sie!"
+          make console execute command "/skript reload HybridWarn"
+          
