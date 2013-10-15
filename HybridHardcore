@@ -1,4 +1,3 @@
-
 #======================================#
 # HybridHardcore Skrypt Wykonany przez:#
 # Jodi dla Skript.pl oraz MPCForum.pl  #
@@ -116,7 +115,7 @@ on respawn:
 		send "&4Umarles! &6Zostaniesz zbanowany za 5 sekund na &e%{@czas}%%{@format}%!"
 		send "&aMozesz odbanowac sie na %{@website}%!"
 		wait 5 real seconds
-		make console execute command "/ban %name of player% %{@czas}%"
+		make console execute command "/ban %name of player% %{@czas}%%{@format}%"
 		broadcast "%name of player% &eZmarl! &cTeraz musi czekac %{@czas}%%{@format}%!"	
 on respawn:
 	if {forma} is "jail":
