@@ -83,7 +83,36 @@ command /warn [<text>] [<text>]:
           wait 1 real second
           send "&4Skrypt Restartuje sie!"
           make console execute command "/skript reload HybridWarn"
-      if arg 1 is "info" "autor":
+      if arg 1 is "info" or "autor":
           send "              {@logo}                 "
-  
+          send "&cAutor: &aJodi"
+          send "&cWykonane dla: &aZagrani.pl"
+      if arg 1 is "kara":
+          if player has permission "hybrid.head":
+              send "&c/warn kara ban &3Zmien kare na Tymczasowy Ban!"
+              send "&c/warn kara jail  &3Zmien kare na Jail!"
+          else:
+              send "&cBlad ! Potrzebujesz uprawnienia &ahybrid.head &cAby tego uzyc!"
+      if arg 1 is "kara":
+          if arg 2 is "zmien":
+              if arg 3 is "ban":
+                  if {warn.form} is "jail":
+                      if player has permission "hybrid.head":
+                          send "&cForma kary zostala zmieniona!"
+                          send "&aUzyj komendy &c/warn reload &aAby zatwierdzic zmiany!"
+                          set {warn.form} to "ban"
+                      else:
+                          send "&cBNie masz uprawnien do uzycia tej komendy!"
+                  else:
+                      if player has permission "hybrid.head":
+                          send "&cForma kary zostala zmieniona!"
+                          send "&aUzyj komendy &c/warn reload &aAby zatwierdzic zmiany!"
+                          set {warn.form} to "jail"
+                          
+    
+
+on right click with blaze rod:
+      if name of player tools is "&cWarn":
+          if player has permission "hybrid.admin":
+              
           
