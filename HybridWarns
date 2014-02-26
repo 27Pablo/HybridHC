@@ -31,12 +31,12 @@ options:
 #######################
 #         CODE        #
 #######################
-command /warn [<text>] [<text>] [<text>]:
+command /warn [<text>] [<text>]:
   trigger:
       if arg 1 is "sprawdz" or "check":
         send "            {@logo}                 "
-        send "&eTwój poziom warna: %{warn.%player%}"
-        send "&c Maksymalny poziom warna to {@warn.points}"
+        send "&eTwój poziom warna: %{warn.%player%}%"
+        send "&c Maksymalny poziom warna to %{@warn.points}%"
       if arg 1 is "dodaj" or "add":
         if player has permission "hybrid.admin":
           add 1 to {warn.%arg 2%}
@@ -85,5 +85,5 @@ command /warn [<text>] [<text>] [<text>]:
           make console execute command "/skript reload HybridWarn"
       if arg 1 is "info" "autor":
           send "              {@logo}                 "
-
+  
           
